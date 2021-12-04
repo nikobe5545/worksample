@@ -3,3 +3,4 @@ hsql:*
 localhost.*
 .gradle/
 build/
+gradle/
