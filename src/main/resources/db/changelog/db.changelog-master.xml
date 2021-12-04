@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <property name="now" value="CURRENT_TIMESTAMP" dbms="hsqldb"/>
+
+    <changeSet id="1" author="Nikos Beis">
+        <createTable tableName="Customer">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="version" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="timestamp with time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="timestamp with time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="firstname" type="varchar2(255)"/>
+            <column name="lastname" type="varchar2(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="Account">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="version" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="timestamp with time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="timestamp with time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customer_id" type="int">
+                <constraints nullable="false"
+                             foreignKeyName="fk_account_customer"
+                             referencedTableName="Customer"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="balance" type="double" defaultValue="0.0">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="Transaction">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="version" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="timestamp with time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="timestamp with time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_id" type="int">
+                <constraints nullable="false"
+                             foreignKeyName="fk_transaction_account"
+                             referencedTableName="Account"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="amount" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="varchar2(20)"/>
+            <column name="transactionDateTime" type="timestamp with time zone"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="Nikos Beis" context="dev">
+        <insert tableName="Customer">
+            <column name="version" value="1"/>
+            <column name="created" valueDate="${now}"/>
+            <column name="updated" valueDate="${now}"/>
+            <column name="firstname" value="Nikos"/>
+            <column name="lastname" value="Beis"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
