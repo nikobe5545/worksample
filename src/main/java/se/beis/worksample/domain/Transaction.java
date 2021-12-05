@@ -1,18 +1,19 @@
 package se.beis.worksample.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
 
 @Entity
 public class Transaction extends AbstractEntity {
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
     private BigDecimal amount;
     @Enumerated(EnumType.STRING)
     private TransactionType type;
-    private OffsetDateTime transactionDateTime;
 
     public Account getAccount() {
         return account;
@@ -36,14 +37,6 @@ public class Transaction extends AbstractEntity {
 
     public void setAccount(Account account) {
         this.account = account;
-    }
-
-    public OffsetDateTime getTransactionDateTime() {
-        return transactionDateTime;
-    }
-
-    public void setTransactionDateTime(OffsetDateTime transactionDateTime) {
-        this.transactionDateTime = transactionDateTime;
     }
 
     public enum TransactionType {

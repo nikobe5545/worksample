@@ -72,7 +72,6 @@
                 <constraints nullable="false"/>
             </column>
             <column name="type" type="varchar2(20)"/>
-            <column name="transaction_date_time" type="timestamp with time zone"/>
         </createTable>
     </changeSet>
 

@@ -2,11 +2,12 @@ package se.beis.worksample.domain;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.Objects;
 
 @MappedSuperclass
 public abstract class AbstractEntity {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
     @Version
@@ -56,5 +57,18 @@ public abstract class AbstractEntity {
 
     public void setUpdated(OffsetDateTime updated) {
         this.updated = updated;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractEntity that = (AbstractEntity) o;
+        return id.equals(that.id) && version.equals(that.version);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, version);
     }
 }
