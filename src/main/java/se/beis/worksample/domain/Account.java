@@ -14,7 +14,7 @@ public class Account extends AbstractEntity {
     @JoinColumn(name = "customer_id")
     private Customer customer;
     private BigDecimal balance;
-    @OneToMany
+    @OneToMany(mappedBy = "account")
     private Set<Transaction> transactions = new HashSet<>();
 
     public Customer getCustomer() {

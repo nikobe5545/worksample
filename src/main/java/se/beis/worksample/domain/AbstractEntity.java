@@ -3,9 +3,10 @@ package se.beis.worksample.domain;
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 
-@Entity
+@MappedSuperclass
 public abstract class AbstractEntity {
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
     @Version
@@ -15,7 +16,9 @@ public abstract class AbstractEntity {
 
     @PrePersist
     protected void onCreate() {
-        created = OffsetDateTime.now();
+        OffsetDateTime now = OffsetDateTime.now();
+        created = now;
+        updated = now;
     }
 
     @PreUpdate
