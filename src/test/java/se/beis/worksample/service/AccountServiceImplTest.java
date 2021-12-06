@@ -59,6 +59,16 @@ class AccountServiceImplTest {
     }
 
     @Test
+    public void shouldAddAccountWithoutInitialCreditWhenInitialCreditIsNull() throws Exception {
+        Customer customer = new Customer();
+        customer.setId(0L);
+        when(customerService.findById(0L)).thenReturn(customer);
+        accountService.addAccount(0L, null);
+        verify(accountRepository, times(1)).save(isA(Account.class));
+        verify(transactionService, never()).createTransaction(any(), any(), any());
+    }
+
+    @Test
     public void shouldAddAccountWithInitialCreditWhenInitialCreditIsAboveZero() throws Exception {
         Customer customer = new Customer();
         customer.setId(0L);

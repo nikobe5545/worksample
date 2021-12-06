@@ -41,7 +41,7 @@ public class AccountServiceImpl implements AccountService {
         log.debug("Creating new account for customer {} with initial credit of {}", customerId, initialCredit);
         Customer customer = customerService.findById(customerId);
         Account account = createAndPersistNewAccountFor(customer);
-        if (initialCredit.compareTo(BigDecimal.ZERO) > 0) {
+        if (initialCredit != null && initialCredit.compareTo(BigDecimal.ZERO) > 0) {
             log.debug("Initial credit is above 0. A credit transaction for the amount of {} will be created.", initialCredit);
             credit(account, initialCredit);
         }
