@@ -15,10 +15,10 @@
             <column name="version" type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column name="created" type="timestamp with time zone">
+            <column name="created" type="timestamp">
                 <constraints nullable="false"/>
             </column>
-            <column name="updated" type="timestamp with time zone">
+            <column name="updated" type="timestamp">
                 <constraints nullable="false"/>
             </column>
             <column name="firstname" type="varchar2(255)"/>
@@ -33,10 +33,10 @@
             <column name="version" type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column name="created" type="timestamp with time zone">
+            <column name="created" type="timestamp">
                 <constraints nullable="false"/>
             </column>
-            <column name="updated" type="timestamp with time zone">
+            <column name="updated" type="timestamp">
                 <constraints nullable="false"/>
             </column>
             <column name="customer_id" type="bigint">
@@ -56,10 +56,10 @@
             <column name="version" type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column name="created" type="timestamp with time zone">
+            <column name="created" type="timestamp">
                 <constraints nullable="false"/>
             </column>
-            <column name="updated" type="timestamp with time zone">
+            <column name="updated" type="timestamp">
                 <constraints nullable="false"/>
             </column>
             <column name="account_id" type="bigint">

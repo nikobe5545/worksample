@@ -1,6 +1,7 @@
 package se.beis.worksample.domain;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
@@ -12,19 +13,19 @@ public abstract class AbstractEntity {
     private Long id;
     @Version
     private Long version;
-    private OffsetDateTime created;
-    private OffsetDateTime updated;
+    private Instant created;
+    private Instant updated;
 
     @PrePersist
     protected void onCreate() {
-        OffsetDateTime now = OffsetDateTime.now();
+        Instant now = Instant.now();
         created = now;
         updated = now;
     }
 
     @PreUpdate
     protected void onUpdate() {
-        updated = OffsetDateTime.now();
+        updated = Instant.now();
     }
 
     public Long getId() {
@@ -43,19 +44,19 @@ public abstract class AbstractEntity {
         this.version = version;
     }
 
-    public OffsetDateTime getCreated() {
+    public Instant getCreated() {
         return created;
     }
 
-    public void setCreated(OffsetDateTime created) {
+    public void setCreated(Instant created) {
         this.created = created;
     }
 
-    public OffsetDateTime getUpdated() {
+    public Instant getUpdated() {
         return updated;
     }
 
-    public void setUpdated(OffsetDateTime updated) {
+    public void setUpdated(Instant updated) {
         this.updated = updated;
     }
 
