@@ -1,6 +1,6 @@
 ## Prerequisites
-1. Java 11
-2. Node >= 16.13.0. Earlier versions will probably work, but I haven't tested that.
+1. Java 11 https://openjdk.java.net/projects/jdk/11/
+2. Node >= 16.13.0. https://nodejs.org/en/ Earlier versions will probably work, but I haven't tested that.
 
 ## Run locally
 1. Clone repository
@@ -16,6 +16,8 @@ Now open http://localhost:3000 in your Chrome browser (other browsers might work
 and try it out.
 
 If you want to access the backend directly: http://localhost:8080
+
+A Postman (https://www.postman.com/) collection for the backend can be found in `devtools/postman` folder.
 
 ## Development considerations
 I chose to implement the backend solution using java with Spring Boot. I could have chosen Python too which
