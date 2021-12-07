@@ -1,13 +1,15 @@
 ## Prerequisites
 1. Java 11 https://openjdk.java.net/projects/jdk/11/
-2. Node >= 16.13.0. https://nodejs.org/en/ Earlier versions will probably work, but I haven't tested that.
+2. Node >= 16.13.0. https://nodejs.org/en/ Earlier versions will probably work, but it hasn't been tested.
 
 ## Run locally
+
+Instructions for running on mac and linux boxes. The below will probably work on Windows as well with possibly minor modifications.
 1. Clone repository
-2. Open a console (linux, mac) or cmd window (windows) and cd into the project directory
+2. Open a console and cd into the project directory
 3. Build the Spring Boot application by running `./gradlew build`
 4. Start the Spring Boot application by running `./gradlew bootRun --args='--spring.profiles.active=local'`
-5. Open a new console or cmd window and cd into the project directory
+5. Open a new console and cd into the project directory
 6. Change directory to the frontend directory: `cd frontend`
 7. Build/install the frontend by running `npm install`
 8. Start the frontend by running `npm start`
