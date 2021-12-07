@@ -11,7 +11,6 @@ import java.util.Set;
 public class Customer extends AbstractEntity {
     private String firstname;
     private String lastname;
-    @JsonIgnore
     @OneToMany(mappedBy = "customer")
     private Set<Account> accounts = new HashSet<>();
 
