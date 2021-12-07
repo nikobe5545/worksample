@@ -71,7 +71,9 @@ const generateAccountFormModalBody = event => {
     let modalBody = document.getElementById("add-account-modal-body")
     modalBody.innerHTML =
         `<form>
-                <legend>Add account for ${customerFirstname} ${customerLastname}</legend>
+                <div class="modal-body mb-3">
+                    <legend>Add account for ${customerFirstname} ${customerLastname}</legend>
+                </div>
                 <div class="modal-body mb-3">
                     <label for="initial-credit" class="form-label">Initial credit</label>
                     <input type="number" class="form-control" id="initial-credit" aria-describedby="initial-credit-help">
