@@ -6,6 +6,7 @@ import se.beis.worksample.service.AccountService;
 import se.beis.worksample.web.dto.NewAccountRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 public class AccountController {
@@ -17,15 +18,13 @@ public class AccountController {
         return accountService.findById(id);
     }
 
-    @PostMapping("/customers/{customerId}/accounts")
-    public Account createNewAccount(@RequestBody NewAccountRequest newAccountRequest) throws Exception {
-        validateRequest(newAccountRequest);
-        return accountService.addAccount(newAccountRequest.getCustomerId(), newAccountRequest.getInitialCredit());
+    @GetMapping("/customers/{customerId}/accounts")
+    public List<Account> findAllAccountsForCustomer(@PathVariable Long customerId) {
+        return accountService.findAllAccountsForCustomer(customerId);
     }
 
-    private void validateRequest(NewAccountRequest newAccountRequest) {
-        if (newAccountRequest.getCustomerId() == null) {
-            throw new IllegalArgumentException("Customer id must not be null");
-        }
+    @PostMapping("/customers/{customerId}/accounts")
+    public Account createNewAccount(@PathVariable Long customerId, @RequestBody NewAccountRequest newAccountRequest) throws Exception {
+        return accountService.addAccount(customerId, newAccountRequest.getInitialCredit());
     }
 }

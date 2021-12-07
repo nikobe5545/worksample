@@ -6,6 +6,5 @@ import java.math.BigDecimal;
 
 @Data
 public class NewAccountRequest {
-    private Long customerId;
     private BigDecimal initialCredit;
 }

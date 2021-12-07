@@ -10,5 +10,5 @@ public interface CustomerService {
 
     Customer findById(Long id) throws Exception;
 
-    void addCustomer(Customer customer);
+    Customer createCustomer(Customer customer);
 }
