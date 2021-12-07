@@ -21,7 +21,7 @@
 					"raw": "{\n    \"initialCredit\": 1000.0\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/customers/1/accounts",
+					"raw": "http://localhost:8080/customers/0/accounts",
 					"protocol": "http",
 					"host": [
 						"localhost"
