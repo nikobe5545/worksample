@@ -29,6 +29,39 @@
             </table>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary" id="create-customer-button" data-bs-toggle="modal" data-bs-target="#create-customer-modal">Create new customer</button>
+        </div>
+    </div>
+    <div class="modal fade" id="create-customer-modal" tabindex="-1" aria-labelledby="create-customer-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="create-customer-modal-label">Create new Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="create-customer-modal-body">
+                    <form>
+                        <div class="modal-body mb-3">
+                            <label for="firstname" class="form-label">Firstname</label>
+                            <input type="text" class="form-control" id="firstname" aria-describedby="firstname-help">
+                            <div id="firstname-help" class="form-text">Firstname of the customer</div>
+                        </div>
+                        <div class="modal-body mb-3">
+                            <label for="lastname" class="form-label">Lastname</label>
+                            <input type="text" class="form-control" id="lastname" aria-describedby="lastname-help">
+                            <div id="lastname-help" class="form-text">Lastname of the customer</div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <span class="btn btn-primary" id="create-customer-submit-button">Create customer</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="accounts-modal" tabindex="-1" aria-labelledby="accounts-modal-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -52,19 +85,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div id="add-account-modal-body">
-                    <form>
-                        <legend></legend>
-                        <div class="modal-body mb-3">
-                            <label for="initial-credit" class="form-label">Initial credit</label>
-                            <input type="number" class="form-control" id="initial-credit" aria-describedby="initial-credit-help">
-                            <div id="initial-credit-help" class="form-text">Input a positive number for adding an initial credit. Leave empty or set to zero if no initial credit should be set.</div>
-                        </div>
-                        <input type="hidden" name="customerId" value="" id="customer-id-input"/>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <span class="btn btn-primary" id="create-account-button">Create account</span>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

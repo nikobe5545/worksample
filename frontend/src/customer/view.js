@@ -1,39 +1,33 @@
-import {getAllCustomers} from "./service.js";
+import {createNewCustomer, getAllCustomers} from "./service.js";
 import {createNewAccount, getAccountsForCustomer} from "../account/service.js";
 
-const renderAccounts = async event => {
-    const button = event.target
-    const customerId = parseInt(button.dataset.customerId)
-    const accounts = await getAccountsForCustomer(customerId)
-    let html = "<p>Customer has no accounts</p>"
-    if (accounts.length > 0) {
-        html =
-            "<table class='table table-striped'>" +
-            "<thead>" +
-            "   <tr>" +
-            "       <th>#</th>" +
-            "       <th>Id</th>" +
-            "       <th>Created</th>" +
-            "       <th>Balance</th>" +
-            "   </tr>" +
-            "</thead>" +
-            "<tbody>"
-        accounts.forEach(account => {
-            html += `<tr data-bs-toggle="collapse" data-bs-target="#account${account.id}" class="accordion-toggle collapsed">
+const renderAccountsTable = (html, accounts) => {
+    html =
+        "<table class='table table-striped'>" +
+        "<thead>" +
+        "   <tr>" +
+        "       <th>#</th>" +
+        "       <th>Id</th>" +
+        "       <th>Created</th>" +
+        "       <th>Balance</th>" +
+        "   </tr>" +
+        "</thead>" +
+        "<tbody>"
+    accounts.forEach(account => {
+        html += `<tr data-bs-toggle="collapse" data-bs-target="#account${account.id}" class="accordion-toggle collapsed">
                             <td class="expand-button"></td>
                             <td>${account.id}</td>
                             <td>${new Date(account.created).toLocaleString()}</td>
                             <td>${account.balance}</td>
                          </tr>`
-            if (account.transactions.length > 0) {
-                account.transactions.forEach(transaction => {
-                    html += `<tr>
+        if (account.transactions.length > 0) {
+            account.transactions.forEach(transaction => {
+                html += `<tr>
                                 <td colspan="12" class="hiddenRow">
                                     <div class="accordian-body collapse" id="account${account.id}">
                                         <table class="table table-dark table-striped">
                                             <thead>
                                                 <tr class="info">
-                                                    <th>#</th>
                                                     <th>Transaction id</th>
                                                     <th>Created</th>
                                                     <th>Amount</th>
@@ -42,7 +36,6 @@ const renderAccounts = async event => {
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td></td>
                                                     <td>${transaction.id}</td>
                                                     <td>${new Date(transaction.created).toLocaleString()}</td>
                                                     <td>${transaction.amount}</td>
@@ -53,26 +46,31 @@ const renderAccounts = async event => {
                                     </div>
                                 </td>
                             </tr>`
-                })
-            }
-        })
-        html += "</table>"
+            })
+        }
+    })
+    html += "</table>"
+    return html;
+}
+
+const renderAccounts = async event => {
+    const button = event.target
+    const customerId = parseInt(button.dataset.customerId)
+    const accounts = await getAccountsForCustomer(customerId)
+    let html = "<p>Customer has no accounts</p>"
+    if (accounts.length > 0) {
+        html = renderAccountsTable(html, accounts);
     }
     document.getElementById("accounts-modal-body").innerHTML = html
 }
 
-function addButtonListeners() {
-    document.querySelector("button.view-account").onclick = async event => {
-        await renderAccounts(event);
-    }
-    document.querySelector("button.create-new-account").onclick = event => {
-        // Render form in modal
-        const customerId = event.target.dataset.customerId
-        const customerFirstname = event.target.dataset.customerFirstname
-        const customerLastname = event.target.dataset.customerLastname
-        let modalBody = document.getElementById("add-account-modal-body")
-        modalBody.innerHTML =
-            `<form>
+const generateAccountFormModalBody = event => {
+    const customerId = event.target.dataset.customerId
+    const customerFirstname = event.target.dataset.customerFirstname
+    const customerLastname = event.target.dataset.customerLastname
+    let modalBody = document.getElementById("add-account-modal-body")
+    modalBody.innerHTML =
+        `<form>
                 <legend>Add account for ${customerFirstname} ${customerLastname}</legend>
                 <div class="modal-body mb-3">
                     <label for="initial-credit" class="form-label">Initial credit</label>
@@ -85,19 +83,49 @@ function addButtonListeners() {
                     <span class="btn btn-primary" id="create-account-button">Create account</span>
                 </div>
             </form>`
-        document.getElementById("create-account-button").onclick = async () => {
-            const customerId = parseInt(document.getElementById("customer-id-input").value)
-            const initialCredit = parseInt(document.getElementById("initial-credit").value)
-            const newAccount = await createNewAccount(customerId, initialCredit)
-            modalBody.innerHTML = `
+}
+
+const submitAccountForm = async () => {
+    let modalBody = document.getElementById("add-account-modal-body")
+    const customerId = parseInt(document.getElementById("customer-id-input").value)
+    const initialCredit = parseInt(document.getElementById("initial-credit").value)
+    const newAccount = await createNewAccount(customerId, initialCredit)
+    modalBody.innerHTML = `
                 <div class="modal-body">
-                    <h3>Account with id ${newAccount.id} was added</h3>
+                    <h5>Account with id ${newAccount.id} was added</h5>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>`
-        }
+}
+
+const submitNewCustomerForm = async () => {
+    const firstnameInput = document.getElementById("firstname")
+    const lastnameInput = document.getElementById("lastname")
+    const customer = await createNewCustomer(firstnameInput.value, lastnameInput.value)
+    firstnameInput.value = ""
+    lastnameInput.value = ""
+    await renderCustomers()
+}
+
+const addButtonListeners = () => {
+    document.getElementById("create-customer-submit-button").onclick = async event => {
+        await submitNewCustomerForm()
     }
+    Array.from(document.querySelectorAll("button.view-account")).forEach(button => {
+        button.onclick = async event => {
+            await renderAccounts(event);
+        }
+    })
+    Array.from(document.querySelectorAll("button.create-new-account")).forEach(button => {
+        button.onclick = event => {
+            // Render form in modal
+            generateAccountFormModalBody(event);
+            document.getElementById("create-account-button").onclick = async () => {
+                await submitAccountForm();
+            }
+        }
+    })
 }
 
 export const renderCustomers = async () => {
@@ -115,7 +143,6 @@ export const renderCustomers = async () => {
                     data-bs-toggle="modal" data-bs-target="#add-account-modal">Create new account</button></td>
                  </tr>`
     })
-    const tbody = document.querySelector("table#customer-table tbody")
-    tbody.innerHTML = html
+    document.querySelector("table#customer-table tbody").innerHTML = html
     addButtonListeners();
 }
