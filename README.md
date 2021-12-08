@@ -21,7 +21,7 @@ A Postman (https://www.postman.com/) collection for the backend can be found in 
 
 ## Development considerations
 I chose to implement the backend solution using Java with Spring Boot. The database is an in-memory DB and the schema
-is created using Liquibase. A default user (me!) is inserted on startup when using the `local` profile.
+is created using Liquibase. A default customer (me!) is inserted on startup when using the `local` profile.
 
 Nowadays I generally prefer Python which I think typically needs less boilerplate code and is also more readable in my opinion. 
 In this case I felt Java was a better fit as it was preferred along with C# (as per the task description), 
